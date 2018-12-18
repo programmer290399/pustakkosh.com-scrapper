@@ -1,4 +1,4 @@
-# medplusmart.com-scrapper
+# pustakkosh.com-scrapper
 ## Follow these steps before you run `scrapping-forever.py` :
 
 * Please run `pip install selenium` 
