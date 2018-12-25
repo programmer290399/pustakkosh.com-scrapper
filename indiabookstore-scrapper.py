@@ -24,76 +24,75 @@ except Exception as error:
 
 # Here we scrap product links from thier respective categories 
 
-# category_links = open('kick_start_categories.txt','r',encoding='utf-8')
-# out_file = open('indiabookstore_book_links.json','w+' , encoding='utf-8')
-# product_links = list()
+category_links = open('kick_start_categories.txt','r',encoding='utf-8')
+out_file = open('indiabookstore_book_links.json','w+' , encoding='utf-8')
+product_links = list()
 
-# next_btn_Xpath = '//li[@class="arrow"][contains(text(),"Next »")]'
-# book_links_Xpath = '//div[@class="col-md-3 col-xs-6 text-center "]//child::a[@class="bookPageLink"]'
+next_btn_Xpath = '//li[@class="arrow"][contains(text(),"Next »")]'
+book_links_Xpath = '//div[@class="col-md-3 col-xs-6 text-center "]//child::a[@class="bookPageLink"]'
 
-# for link in category_links :
-#     print('Working on :' ,link.split('/')[-1])
-#     try:
-#                 browser.get(link)
+for link in category_links :
+    print('Working on :' ,link.split('/')[-1])
+    try:
+                browser.get(link)
                 
 
-#     except Exception as err:
-#                 print(err))
-#                 break
-#     else:
-#                 print('Successfully Accessed:',link)
-#                 print('Please be patient it may take several minutes .....')
-#     while True :
-#         try :
-#             element = browser.find_element_by_xpath(next_btn_Xpath)
-#         except NoSuchElementException:
-#             time.sleep(1)
+    except Exception as err:
+                print(str(err))
+                break
+    else:
+                print('Successfully Accessed:',link)
+                print('Please be patient it may take several minutes .....')
+    while True :
+        try :
+            element = browser.find_element_by_xpath(next_btn_Xpath)
+        except NoSuchElementException:
+            time.sleep(1)
             
-#             anchor_tags = browser.find_elements_by_xpath(book_links_Xpath) 
+            anchor_tags = browser.find_elements_by_xpath(book_links_Xpath) 
             
                 
-#             for tag in anchor_tags :
-#                 product_links.append(tag.get_attribute("href"))
+            for tag in anchor_tags :
+                product_links.append(tag.get_attribute("href"))
                     
-#             break 
-#         time.sleep(1)
-#         element = WebDriverWait(browser, 120 ,ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,))\
-#                         .until(expected_conditions.presence_of_element_located((By.XPATH, next_btn_Xpath)))
-#         try :
-#             if element.is_displayed() :
-#                 time.sleep(1)
-#                 anchor_tags = browser.find_elements_by_xpath(book_links_Xpath) 
+            break 
+        time.sleep(1)
+        element = WebDriverWait(browser, 120 ,ignored_exceptions=(NoSuchElementException,StaleElementReferenceException,))\
+                        .until(expected_conditions.presence_of_element_located((By.XPATH, next_btn_Xpath)))
+        try :
+            if element.is_displayed() :
+                time.sleep(1)
+                anchor_tags = browser.find_elements_by_xpath(book_links_Xpath) 
                 
                 
-#                 for tag in anchor_tags :
-#                     product_links.append(tag.get_attribute("href"))
+                for tag in anchor_tags :
+                    product_links.append(tag.get_attribute("href"))
                 
-#                 browser.execute_script("arguments[0].click();", element)
-#                 time.sleep(1)
-#             else :
-#                 time.sleep(1)
-#                 anchor_tags = browser.find_elements_by_xpath(book_links_Xpath) 
+                browser.execute_script("arguments[0].click();", element)
+                time.sleep(1)
+            else :
+                time.sleep(1)
+                anchor_tags = browser.find_elements_by_xpath(book_links_Xpath) 
             
                 
-#                 for tag in anchor_tags :
-#                     product_links.append(tag.get_attribute("href"))
+                for tag in anchor_tags :
+                    product_links.append(tag.get_attribute("href"))
                 
-#                 break 
+                break 
 
-#         except exceptions.StaleElementReferenceException:  
-#             pass
+        except exceptions.StaleElementReferenceException:  
+            pass
     
-#     print('writing links to file .... ')
-#     out_file.seek(0)
-#     out_file.truncate()
-#     json.dump({'links':list(set(product_links))},out_file)
-#     print('File successfully updated.....')
-#     #! Remove before commit 
-#     break
+    print('writing links to file .... ')
+    out_file.seek(0)
+    out_file.truncate()
+    json.dump({'links':list(set(product_links))},out_file)
+    print('File successfully updated.....')
 
 
-# out_file.close()
-# print('All data saved successfully !!')
+
+out_file.close()
+print('All data saved successfully !!')
 
 
 # Here we scrape book data 
@@ -113,7 +112,7 @@ for link in links :
                 break
     else:
                 print('Successfully Accessed:',link)
-                print('Please be patient it may take several minutes .....')
+                
 
     try : 
         book_name = re.sub('\s+', '' , browser.find_element_by_xpath('//h1[@class="bookMainTitle"]').text )
